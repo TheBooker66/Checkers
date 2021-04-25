@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Checkers Game!</title>
+    <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center, dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend, table,
+        caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        body {
+            line-height: 1;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        td img {
+            display: block;
+        }
+        .canBeClickedOn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload='BuildingTheBoard()'>
+    <table id="board" border="0" cellspacing="0" style="display:inline-block"></table>
+    <div style="display:inline-block; vertical-align:top">
+        <font size="+2">
+            <div id="playerName1"></div>
+            <div id="playerName2"></div>
+            <div id="playerTurn"></div>
+            <div id="blackplayeramount"></div>
+            <div id="redplayeramount"></div>
+            <br />
+            <div>
+                Rules:
+            </div>
+        </font>
+        <font size="+1">
+            <div id="rules">
+                Moves are allowed only on the dark squares, so pieces always move diagonally.
+                <br />
+                Single Pawns are always limited to forward moves (toward the opponent, as they are positioned at the start).
+                <br />
+                A Pawn making a non-eating move (not involving a jump) may move only one square.
+                <br />
+                A piece making a capturing move (a jump) leaps over one of the opponent's pieces, landing in a straight diagonal line on the other side.
+                <br />
+                Only one piece may be captured in a single jump.
+                <br />
+                When a Pawn reaches the furthest row from its starting position it is crowned and becomes a King.
+                <br />
+                Kings are limited to moving diagonally but may move both forward and backward.
+                <br />
+                After a king eats a piece he "land" where he wants on the same diagonal.
+                <br />
+                You cannot eat twice in a single turn.
+                <br />
+                The game ends when one of the players loses all their Pawns.
+                <br />
+                To move press once on the piece you wish to move and once when you want it to go.
+                <br />
+                If the piece does not move, the play you made is not allowed.
+                <br />
+                To make the computer move, press the button below.
+                <br />
+                To play instead of the computer, just play normally.
+            </div>
+        </font>
+        <br />
+        <button onclick="ComputerThink(this);">
+            Computer Move!
+        </button>
+        <button onclick="EndOfGame();">
+            Play again!
+        </button>
+    </div>
+    <script src="Checkers - next test.js"></script>
+</body>
+</html>
