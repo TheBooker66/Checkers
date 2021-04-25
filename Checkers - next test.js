@@ -17,6 +17,7 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
 
 { //regular play - block scope so I can minimize - like #region
     function BuildingTheBoard() {
+        alert("LOLZ")
         if (screen.width > screen.height)
             boardSize = screen.width / 18;
         else
