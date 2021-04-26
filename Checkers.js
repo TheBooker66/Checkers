@@ -317,7 +317,8 @@ const pawnValue = 1, kingValue = 10;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
                         document.getElementById("blackplayeramount").innerHTML = showBlackPlayerAmount;
                         CheckWin();
-                    } else if (AllNum[firstClickRow - 1][firstClickCol - 1] == 3 && firstClickCol - secondClickCol == 2) {
+                    }
+                    else if (AllNum[firstClickRow - 1][firstClickCol - 1] == 3 && firstClickCol - secondClickCol == 2) {
                         tdNum3 = (firstClickRow - 1) * 8 + (firstClickCol - 1);
                         document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow - 1][firstClickCol - 1] = 0;
@@ -635,7 +636,7 @@ const pawnValue = 1, kingValue = 10;
 
     function ComputerThink() {
         if (turns % 2 != 0) {
-            var comparePoints = 100, tempEatenRow, tempEatenCol;
+            var tempEatenRow, tempEatenCol;
             var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
             - the copy references that object - if I don't use these commands, the og gets modified when I modify the copy */
             for (var x = 0; x < 8; x++) {
@@ -768,7 +769,8 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleRow = pieceEatenByKingRow;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                }
+                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -800,7 +802,8 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleRow = pieceEatenByKingRow;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                }
+                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -832,7 +835,8 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleRow = pieceEatenByKingRow;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                }
+                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -864,7 +868,8 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleRow = pieceEatenByKingRow;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                }
+                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -924,7 +929,7 @@ const pawnValue = 1, kingValue = 10;
                 document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 AllNum[bestmiddleRow][bestmiddleCol] = 0;
             }
-            comparePoints = 100, doubleComparePoints = -100, RecursionCounter = 1;
+            comparePoints = 100;
             ChangeTurn();
         }
     }
