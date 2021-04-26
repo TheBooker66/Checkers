@@ -606,6 +606,7 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
         BuildingTheBoard();
     }
 }
+
 { //Computer play - block scope so I can minimize - like #region
     function CountPoints(b) {
         var boardPoints = 0;
