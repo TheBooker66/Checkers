@@ -13,6 +13,7 @@ var firstClickRow, firstClickCol, secondClickRow, secondClickCol, turns = 0, tdN
 var tdNum3, pieceEatenByKingID, pieceEatenByKingRow, pieceEatenByKingCol, blackPawnCount = 12, redPawnCount = 12; //eating
 var boardSize, name1, name2, showTurn, showBlackPlayerAmount, showRedPlayerAmount;  //show stuff on the screen
 var comparePoints = 100, doubleComparePoints = -100, oldComparePoints, RecursionCounter = 1, bestfirstRow, bestfirstCol, bestsecondRow, bestsecondCol, bestmiddleRow, bestmiddleCol, tempTurn = turns; //computer playz
+var doubleTempArray; //for "recursion"
 const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
 
 { //regular play - block scope so I can minimize - like #region
@@ -602,7 +603,6 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
         comparePoints = 100;
         RecursionCounter = 1;
         tempTurn = turns;
-        bestfirstRow, bestfirstCol, bestsecondRow, bestsecondCol, bestmiddleRow, bestmiddleCol;
         BuildingTheBoard();
     }
 }
@@ -611,134 +611,18 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
         var boardPoints = 0;
         for (var x = 0; x < 8; x++) {
             for (var y = 0; y < 8; y++) {
-                switch (x) {
-                    case 0:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 8;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
-                        break;
+                switch (b[x][y]) {
                     case 1:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 2;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 7;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
+                        boardPoints += (pawnValue * x) + 1;
                         break;
                     case 2:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 3;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 6;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
+                        boardPoints -= (pawnValue * x) + 1;
                         break;
                     case 3:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 4;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 5;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
+                        boardPoints += kingValue;
                         break;
                     case 4:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 5;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 4;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
-                        break;
-                    case 5:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 6;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 3;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
-                        break;
-                    case 6:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 7;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue * 2;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
-                        break;
-                    case 7:
-                        switch (b[x][y]) {
-                            case 1:
-                                boardPoints += pawnValue * 8;
-                                break;
-                            case 2:
-                                boardPoints -= pawnValue;
-                                break;
-                            case 3:
-                                boardPoints += kingValue;
-                                break;
-                            case 4:
-                                boardPoints -= kingValue;
-                                break;
-                        }
+                        boardPoints -= kingValue;
                         break;
                 }
             }
@@ -751,7 +635,6 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
         var tempEatenRow, tempEatenCol;
         //var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
         //    - the copy references that object - if I don't use these commands the original gets modified when I modify the copy */
-        var doubleTempArray; //for "recursion"
         var doublebestfirstRow, doublebestfirstCol, doublebestsecondRow, doublebestsecondCol, doublebestmiddleRow, doublebestmiddleCol;
         if (tempTurn % 2 != 0) {
             for (var x = 0; x < 8; x++) {
