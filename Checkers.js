@@ -614,10 +614,12 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
             for (var y = 0; y < 8; y++) {
                 switch (b[x][y]) {
                     case 1:
-                        boardPoints += (pawnValue * x) + 1;
+                        boardPoints += x;
+                        boardPoints++;
                         break;
                     case 2:
-                        boardPoints -= (pawnValue * x) + 1;
+                        boardPoints -= (7 - x);
+                        boardPoints--;
                         break;
                     case 3:
                         boardPoints += kingValue;
