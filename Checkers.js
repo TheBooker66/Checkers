@@ -12,9 +12,8 @@ var AllNum =  //null - can't be stepped in, 0 - Empty, 1 - Black Pawn, 2 - Red P
 var firstClickRow, firstClickCol, secondClickRow, secondClickCol, turns = 0, tdNum1, tdNum2, clickCounter = 0; //movement and basics
 var tdNum3, pieceEatenByKingID, pieceEatenByKingRow, pieceEatenByKingCol, blackPawnCount = 12, redPawnCount = 12; //eating
 var boardSize, name1, name2, showTurn, showBlackPlayerAmount, showRedPlayerAmount;  //show stuff on the screen
-var comparePoints = 100, doubleComparePoints = -100, oldComparePoints, RecursionCounter = 1, bestfirstRow, bestfirstCol, bestsecondRow, bestsecondCol, bestmiddleRow, bestmiddleCol, tempTurn = turns; //computer playz
-var doubleTempArray; //for "recursion"
-const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
+var comparePoints = 100, bestfirstRow, bestfirstCol, bestsecondRow, bestsecondCol, bestmiddleRow, bestmiddleCol; //computer playz
+const pawnValue = 1, kingValue = 10;
 
 { //regular play - block scope so I can minimize - like #region
     function BuildingTheBoard() {
@@ -635,18 +634,63 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
     }
 
     function ComputerThink() {
-        var tempEatenRow, tempEatenCol;
-        //var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
-        //    - the copy references that object - if I don't use these commands the original gets modified when I modify the copy */
-        var doublebestfirstRow, doublebestfirstCol, doublebestsecondRow, doublebestsecondCol, doublebestmiddleRow, doublebestmiddleCol;
-        if (tempTurn % 2 != 0) {
+        if (turns % 2 != 0) {
+            var comparePoints = 100, tempEatenRow, tempEatenCol;
+            var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
+            - the copy references that object - if I don't use these commands, the og gets modified when I modify the copy */
             for (var x = 0; x < 8; x++) {
                 for (var y = 0; y < 8; y++) {
-                    if (AllNum[x][y] != null) {
-                        tempArray = JSON.parse(JSON.stringify(AllNum)), firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y + 1;
-                        if (tempArray[firstClickRow][firstClickCol] == 2) {
-                            tempArray = JSON.parse(JSON.stringify(AllNum)), firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y + 1;
-                            if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                    tempArray = JSON.parse(JSON.stringify(AllNum));
+                    firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y + 1;
+                    if (tempArray[firstClickRow][firstClickCol] == 2) {
+                        tempArray = JSON.parse(JSON.stringify(AllNum));
+                        firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y + 1;
+                        if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                            //checks if new king
+                            if (secondClickRow == 0) {
+                                tempArray[secondClickRow][secondClickCol] = 4;
+                            }
+                            else {
+                                tempArray[secondClickRow][secondClickCol] = 2;
+                            }
+                            //
+                            tempArray[firstClickRow][firstClickCol] = 0;
+                            if (CountPoints(tempArray) < comparePoints) {
+                                comparePoints = CountPoints(tempArray);
+                                bestfirstRow = firstClickRow;
+                                bestfirstCol = firstClickCol;
+                                bestsecondRow = secondClickRow;
+                                bestsecondCol = secondClickCol;
+                                bestmiddleRow = null;
+                                bestmiddleCol = null;
+                            }
+                        }
+                        tempArray = JSON.parse(JSON.stringify(AllNum));
+                        firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y - 1;
+                        if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                            //checks if new king
+                            if (secondClickRow == 0) {
+                                tempArray[secondClickRow][secondClickCol] = 4;
+                            }
+                            else {
+                                tempArray[secondClickRow][secondClickCol] = 2;
+                            }
+                            //
+                            tempArray[firstClickRow][firstClickCol] = 0;
+                            if (CountPoints(tempArray) < comparePoints) {
+                                comparePoints = CountPoints(tempArray);
+                                bestfirstRow = firstClickRow;
+                                bestfirstCol = firstClickCol;
+                                bestsecondRow = secondClickRow;
+                                bestsecondCol = secondClickCol;
+                                bestmiddleRow = null;
+                                bestmiddleCol = null;
+                            }
+                        }
+                        tempArray = JSON.parse(JSON.stringify(AllNum));
+                        firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y + 2;
+                        if (secondClickRow >= 0) {
+                            if (SecondCheckRightEat(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                 //checks if new king
                                 if (secondClickRow == 0) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
@@ -656,23 +700,26 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 }
                                 //
                                 tempArray[firstClickRow][firstClickCol] = 0;
-                                tempTurn++;
-                                oldComparePoints = comparePoints;
-                                if (RecursionCounter < RecursionAmount)
-                                    ComputerThink();
-                                RecursionCounter--;
-                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                    comparePoints = CountPoints(doubleTempArray);
+                                //removes eaten piece
+                                if (tempArray[firstClickRow - 1][firstClickCol + 1] == 1) {
+                                    tempArray[firstClickRow - 1][firstClickCol + 1] = 0;
+                                    tempEatenRow = firstClickRow - 1;
+                                    tempEatenCol = firstClickCol + 1;
+                                }
+                                //
+                                if (CountPoints(tempArray) < comparePoints) {
+                                    comparePoints = CountPoints(tempArray);
                                     bestfirstRow = firstClickRow;
                                     bestfirstCol = firstClickCol;
                                     bestsecondRow = secondClickRow;
                                     bestsecondCol = secondClickCol;
-                                    bestmiddleRow = null;
-                                    bestmiddleCol = null;
+                                    bestmiddleRow = tempEatenRow;
+                                    bestmiddleCol = tempEatenCol;
                                 }
                             }
-                            tempArray = JSON.parse(JSON.stringify(AllNum)), firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y - 1;
-                            if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                            tempArray = JSON.parse(JSON.stringify(AllNum));
+                            firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y - 2;
+                            if (SecondCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                 //checks if new king
                                 if (secondClickRow == 0) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
@@ -682,563 +729,160 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 }
                                 //
                                 tempArray[firstClickRow][firstClickCol] = 0;
-                                tempTurn++;
-                                oldComparePoints = comparePoints;
-                                if (RecursionCounter < RecursionAmount)
-                                    ComputerThink();
-                                RecursionCounter--;
-                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                    comparePoints = CountPoints(doubleTempArray);
+                                //removes eaten piece
+                                if (tempArray[firstClickRow - 1][firstClickCol - 1] == 1) {
+                                    tempArray[firstClickRow - 1][firstClickCol - 1] = 0;
+                                    tempEatenRow = firstClickRow - 1;
+                                    tempEatenCol = firstClickCol - 1;
+                                }
+                                //
+                                if (CountPoints(tempArray) < comparePoints) {
+                                    comparePoints = CountPoints(tempArray);
                                     bestfirstRow = firstClickRow;
                                     bestfirstCol = firstClickCol;
                                     bestsecondRow = secondClickRow;
                                     bestsecondCol = secondClickCol;
-                                    bestmiddleRow = null;
-                                    bestmiddleCol = null;
+                                    bestmiddleRow = tempEatenRow;
+                                    bestmiddleCol = tempEatenCol;
                                 }
                             }
-                            tempArray = JSON.parse(JSON.stringify(AllNum)), firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y + 2;
-                            if (secondClickRow >= 0) {
-                                if (SecondCheckRightEat(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                    //checks if new king
-                                    if (secondClickRow == 0) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                    }
-                                    else {
-                                        tempArray[secondClickRow][secondClickCol] = 2;
-                                    }
-                                    //
+                        } //
+                    }
+                    else if (tempArray[firstClickRow][firstClickCol] == 4) {
+                        firstClickRow = x, firstClickCol = y;
+                        for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
+                            for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
+                                tempArray = JSON.parse(JSON.stringify(AllNum));
+                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
-                                    if (tempArray[firstClickRow - 1][firstClickCol + 1] == 1) {
-                                        tempArray[firstClickRow - 1][firstClickCol + 1] = 0;
-                                        tempEatenRow = firstClickRow - 1;
-                                        tempEatenCol = firstClickCol + 1;
-                                    }
-                                    else if (tempArray[firstClickRow - 1][firstClickCol + 1] == 3) {
-                                        tempArray[firstClickRow - 1][firstClickCol + 1] = 0;
-                                        tempEatenRow = firstClickRow - 1;
-                                        tempEatenCol = firstClickCol + 1;
-                                    }
+                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
                                     //
-                                    tempTurn++;
-                                    oldComparePoints = comparePoints;
-                                    if (RecursionCounter < RecursionAmount)
-                                        ComputerThink();
-                                    RecursionCounter--;
-                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                        comparePoints = CountPoints(doubleTempArray);
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
                                         bestfirstRow = firstClickRow;
                                         bestfirstCol = firstClickCol;
                                         bestsecondRow = secondClickRow;
                                         bestsecondCol = secondClickCol;
-                                        bestmiddleRow = tempEatenRow;
-                                        bestmiddleCol = tempEatenCol;
+                                        bestmiddleRow = pieceEatenByKingRow;
+                                        bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                }
-                                tempArray = JSON.parse(JSON.stringify(AllNum)), firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y - 2;
-                                if (SecondCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                    //checks if new king
-                                    if (secondClickRow == 0) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                    }
-                                    else {
-                                        tempArray[secondClickRow][secondClickCol] = 2;
-                                    }
-                                    //
+                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
-                                    //removes eaten piece
-                                    if (tempArray[firstClickRow - 1][firstClickCol - 1] == 1) {
-                                        tempArray[firstClickRow - 1][firstClickCol - 1] = 0;
-                                        tempEatenRow = firstClickRow - 1;
-                                        tempEatenCol = firstClickCol - 1;
-                                    }
-                                    else if (tempArray[firstClickRow - 1][firstClickCol - 1] == 3) {
-                                        tempArray[firstClickRow - 1][firstClickCol - 1] = 0;
-                                        tempEatenRow = firstClickRow - 1;
-                                        tempEatenCol = firstClickCol - 1;
-                                    }
-                                    //
-                                    tempTurn++;
-                                    oldComparePoints = comparePoints;
-                                    if (RecursionCounter < RecursionAmount)
-                                        ComputerThink();
-                                    RecursionCounter--;
-                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                        comparePoints = CountPoints(doubleTempArray);
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
                                         bestfirstRow = firstClickRow;
                                         bestfirstCol = firstClickCol;
                                         bestsecondRow = secondClickRow;
                                         bestsecondCol = secondClickCol;
-                                        bestmiddleRow = tempEatenRow;
-                                        bestmiddleCol = tempEatenCol;
-                                    }
-                                }
-                            } //
-                        }
-                        else if (tempArray[firstClickRow][firstClickCol] == 4) {
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
-                                for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
-                                    tempArray = JSON.parse(JSON.stringify(AllNum));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = pieceEatenByKingRow;
-                                            bestmiddleCol = pieceEatenByKingCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        tempTurn++;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = null;
-                                            bestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
-                                for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
-                                    tempArray = JSON.parse(JSON.stringify(AllNum));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = pieceEatenByKingRow;
-                                            bestmiddleCol = pieceEatenByKingCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = null;
-                                            bestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
-                                for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
-                                    tempArray = JSON.parse(JSON.stringify(AllNum));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = pieceEatenByKingRow;
-                                            bestmiddleCol = pieceEatenByKingCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = null;
-                                            bestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
-                                for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
-                                    tempArray = JSON.parse(JSON.stringify(AllNum));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = pieceEatenByKingRow;
-                                            bestmiddleCol = pieceEatenByKingCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        tempArray[secondClickRow][secondClickCol] = 4;
-                                        tempArray[firstClickRow][firstClickCol] = 0;
-                                        tempTurn++;
-                                        oldComparePoints = comparePoints;
-                                        if (RecursionCounter < RecursionAmount)
-                                            ComputerThink();
-                                        RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
-                                            comparePoints = CountPoints(doubleTempArray);
-                                            bestfirstRow = firstClickRow;
-                                            bestfirstCol = firstClickCol;
-                                            bestsecondRow = secondClickRow;
-                                            bestsecondCol = secondClickCol;
-                                            bestmiddleRow = null;
-                                            bestmiddleCol = null;
-                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-            }
-            console.log(AllNum);
-            ComputerMove();
-        }
-        else {
-            for (var x = 0; x < 7; x++) {
-                for (var y = 0; y < 7; y++) {
-                    if (AllNum[x][y] != null) {
-                        doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 1, secondClickCol = y + 1;
-                        if (doubleTempArray[firstClickRow][firstClickCol] == 1) {
-                            doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 1, secondClickCol = y + 1;
-                            if (FirstCheckMove(doubleTempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                //checks if new king
-                                if (secondClickRow == 7) {
-                                    doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                }
-                                else {
-                                    doubleTempArray[secondClickRow][secondClickCol] = 1;
-                                }
-                                //
-                                doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                    doubleComparePoints = CountPoints(tempArray);
-                                    doublebestfirstRow = firstClickRow;
-                                    doublebestfirstCol = firstClickCol;
-                                    doublebestsecondRow = secondClickRow;
-                                    doublebestsecondCol = secondClickCol;
-                                    doublebestmiddleRow = null;
-                                    doublebestmiddleCol = null;
-                                }
-                            }
-                            doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 1, secondClickCol = y - 1;
-                            if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                //checks if new king
-                                if (secondClickRow == 7) {
-                                    doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                }
-                                else {
-                                    doubleTempArray[secondClickRow][secondClickCol] = 1;
-                                }
-                                //
-                                doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                    doubleComparePoints = CountPoints(tempArray);
-                                    doublebestfirstRow = firstClickRow;
-                                    doublebestfirstCol = firstClickCol;
-                                    doublebestsecondRow = secondClickRow;
-                                    doublebestsecondCol = secondClickCol;
-                                    doublebestmiddleRow = null;
-                                    doublebestmiddleCol = null;
-                                }
-                            }
-                            doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 2, secondClickCol = y + 2;
-                            if (secondClickRow >= 0) {
-                                if (SecondCheckRightEat(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                    //checks if new king
-                                    if (secondClickRow == 7) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                    }
-                                    else {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 1;
-                                    }
-                                    //
-                                    doubleTempArray[firstClickRow][firstClickCol] = 0;
+                        firstClickRow = x, firstClickCol = y;
+                        for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
+                            for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
+                                tempArray = JSON.parse(JSON.stringify(AllNum))
+                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
-                                    if (doubleTempArray[firstClickRow + 1][firstClickCol + 1] == 1) {
-                                        doubleTempArray[firstClickRow + 1][firstClickCol + 1] = 0;
-                                        tempEatenRow = firstClickRow + 1;
-                                        tempEatenCol = firstClickCol + 1;
-                                    }
-                                    else if (doubleTempArray[firstClickRow + 1][firstClickCol + 1] == 3) {
-                                        doubleTempArray[firstClickRow + 1][firstClickCol + 1] = 0;
-                                        tempEatenRow = firstClickRow + 1;
-                                        tempEatenCol = firstClickCol + 1;
-                                    }
+                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
                                     //
-                                    if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                        doubleComparePoints = CountPoints(tempArray);
-                                        doublebestfirstRow = firstClickRow;
-                                        doublebestfirstCol = firstClickCol;
-                                        doublebestsecondRow = secondClickRow;
-                                        doublebestsecondCol = secondClickCol;
-                                        doublebestmiddleRow = tempEatenRow;
-                                        doublebestmiddleCol = tempEatenCol;
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
+                                        bestmiddleRow = pieceEatenByKingRow;
+                                        bestmiddleCol = pieceEatenByKingCol;
+                                    }
+                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
                                     }
                                 }
-                                doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 2, secondClickCol = y - 2;
-                                if (SecondCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                    //checks if new king
-                                    if (secondClickRow == 7) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                    }
-                                    else {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 1;
-                                    }
-                                    //
-                                    doubleTempArray[firstClickRow][firstClickCol] = 0;
+                            }
+                        }
+                        firstClickRow = x, firstClickCol = y;
+                        for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
+                            for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
+                                tempArray = JSON.parse(JSON.stringify(AllNum));
+                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
-                                    if (doubleTempArray[firstClickRow + 1][firstClickCol - 1] == 1) {
-                                        doubleTempArray[firstClickRow + 1][firstClickCol - 1] = 0;
-                                        tempEatenRow = firstClickRow + 1;
-                                        tempEatenCol = firstClickCol - 1;
-                                    }
-                                    else if (doubleTempArray[firstClickRow - 1][firstClickCol - 1] == 3) {
-                                        doubleTempArray[firstClickRow - 1][firstClickCol - 1] = 0;
-                                        tempEatenRow = firstClickRow - 1;
-                                        tempEatenCol = firstClickCol - 1;
-                                    }
+                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
                                     //
-                                    if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                        doubleComparePoints = CountPoints(tempArray);
-                                        doublebestfirstRow = firstClickRow;
-                                        doublebestfirstCol = firstClickCol;
-                                        doublebestsecondRow = secondClickRow;
-                                        doublebestsecondCol = secondClickCol;
-                                        doublebestmiddleRow = tempEatenRow;
-                                        doublebestmiddleCol = tempEatenCol;
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
+                                        bestmiddleRow = pieceEatenByKingRow;
+                                        bestmiddleCol = pieceEatenByKingCol;
                                     }
-                                }
-                            } //
-                        }
-                        else if (doubleTempArray[firstClickRow][firstClickCol] == 3) {
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
-                                for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
-                                    doubleTempArray = JSON.parse(JSON.stringify(tempArray));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        doubleTempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = tempEatenRow;
-                                            doublebestmiddleCol = tempEatenCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = null;
-                                            doublebestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
-                                for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
-                                    doubleTempArray = JSON.parse(JSON.stringify(tempArray));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        doubleTempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = tempEatenRow;
-                                            doublebestmiddleCol = tempEatenCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = null;
-                                            doublebestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
-                                for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
-                                    doubleTempArray = JSON.parse(JSON.stringify(tempArray));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        doubleTempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = tempEatenRow;
-                                            doublebestmiddleCol = tempEatenCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = null;
-                                            doublebestmiddleCol = null;
-                                        }
-                                    }
-                                }
-                            }
-                            firstClickRow = x, firstClickCol = y;
-                            for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
-                                for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
-                                    doubleTempArray = JSON.parse(JSON.stringify(tempArray));
-                                    if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 3;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        //removes eaten piece
-                                        doubleTempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = tempEatenRow;
-                                            doublebestmiddleCol = tempEatenCol;
-                                        }
-                                    } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                        doubleTempArray[secondClickRow][secondClickCol] = 4;
-                                        doubleTempArray[firstClickRow][firstClickCol] = 0;
-                                        if (CountPoints(doubleTempArray) > doubleComparePoints) {
-                                            doubleComparePoints = CountPoints(tempArray);
-                                            doublebestfirstRow = firstClickRow;
-                                            doublebestfirstCol = firstClickCol;
-                                            doublebestsecondRow = secondClickRow;
-                                            doublebestsecondCol = secondClickCol;
-                                            doublebestmiddleRow = null;
-                                            doublebestmiddleCol = null;
-                                        }
+                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
                                     }
                                 }
                             }
                         }
-                    }
+                        firstClickRow = x, firstClickCol = y;
+                        for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
+                            for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
+                                tempArray = JSON.parse(JSON.stringify(AllNum));
+                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
+                                    //removes eaten piece
+                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                                    //
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
+                                        bestmiddleRow = pieceEatenByKingRow;
+                                        bestmiddleCol = pieceEatenByKingCol;
+                                    }
+                                } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                    tempArray[secondClickRow][secondClickCol] = 4;
+                                    tempArray[firstClickRow][firstClickCol] = 0;
+                                    if (CountPoints(tempArray) < comparePoints) {
+                                        comparePoints = CountPoints(tempArray);
+                                        bestfirstRow = firstClickRow;
+                                        bestfirstCol = firstClickCol;
+                                        bestsecondRow = secondClickRow;
+                                        bestsecondCol = secondClickCol;
+                                    }
+                                }
+                            }
+                        }
+                    } //
                 }
             }
-            tempTurn--;
-            RecursionCounter++;
-            if (doublebestfirstRow != null || doublebestfirstCol != null || doublebestsecondRow != null || doublebestsecondCol != null) {
-                if (tempArray[doublebestfirstRow][doublebestfirstCol] == 1) {
-                    if (doublebestsecondRow == 7) {
-                        tempArray[doublebestsecondRow][doublebestsecondCol] = 3;
-                    }
-                    else {
-                        tempArray[doublebestsecondRow][doublebestsecondCol] = 1;
-                    }
-                }
-                else {
-                    tempArray[doublebestfirstRow][doublebestfirstCol] = 3;
-                }
-                tempArray[doublebestfirstRow][doublebestfirstCol] = 0;
-                if (doublebestmiddleRow != null && doublebestmiddleCol != null) {
-                    tempArray[doublebestmiddleRow][doublebestmiddleCol] = 0;
-                }
-                doubleComparePoints = -100;
-            }
-
         }
+        //console.log(AllNum);
+        ComputerMove();
     }
 
     function ComputerMove() {
