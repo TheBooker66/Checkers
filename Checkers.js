@@ -752,6 +752,7 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
         //var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
         //    - the copy references that object - if I don't use these commands the original gets modified when I modify the copy */
         var doubleTempArray; //for "recursion"
+        var doublebestfirstRow, doublebestfirstCol, doublebestsecondRow, doublebestsecondCol, doublebestmiddleRow, doublebestmiddleCol;
         if (tempTurn % 2 != 0) {
             for (var x = 0; x < 8; x++) {
                 for (var y = 0; y < 8; y++) {
@@ -774,7 +775,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 if (RecursionCounter < RecursionAmount)
                                     ComputerThink();
                                 RecursionCounter--;
-                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                    comparePoints = CountPoints(doubleTempArray);
                                     bestfirstRow = firstClickRow;
                                     bestfirstCol = firstClickCol;
                                     bestsecondRow = secondClickRow;
@@ -799,7 +801,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 if (RecursionCounter < RecursionAmount)
                                     ComputerThink();
                                 RecursionCounter--;
-                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                    comparePoints = CountPoints(doubleTempArray);
                                     bestfirstRow = firstClickRow;
                                     bestfirstCol = firstClickCol;
                                     bestsecondRow = secondClickRow;
@@ -837,7 +840,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                     if (RecursionCounter < RecursionAmount)
                                         ComputerThink();
                                     RecursionCounter--;
-                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                        comparePoints = CountPoints(doubleTempArray);
                                         bestfirstRow = firstClickRow;
                                         bestfirstCol = firstClickCol;
                                         bestsecondRow = secondClickRow;
@@ -874,7 +878,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                     if (RecursionCounter < RecursionAmount)
                                         ComputerThink();
                                     RecursionCounter--;
-                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                    if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                        comparePoints = CountPoints(doubleTempArray);
                                         bestfirstRow = firstClickRow;
                                         bestfirstCol = firstClickCol;
                                         bestsecondRow = secondClickRow;
@@ -901,7 +906,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -916,7 +922,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -942,7 +949,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -958,7 +966,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -984,7 +993,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -1000,7 +1010,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -1026,7 +1037,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -1042,7 +1054,8 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         if (RecursionCounter < RecursionAmount)
                                             ComputerThink();
                                         RecursionCounter--;
-                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(tempArray)) {
+                                        if (comparePoints <= oldComparePoints && comparePoints >= CountPoints(doubleTempArray)) {
+                                            comparePoints = CountPoints(doubleTempArray);
                                             bestfirstRow = firstClickRow;
                                             bestfirstCol = firstClickCol;
                                             bestsecondRow = secondClickRow;
@@ -1079,6 +1092,12 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 doubleTempArray[firstClickRow][firstClickCol] = 0;
                                 if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                     doubleComparePoints = CountPoints(tempArray);
+                                    doublebestfirstRow = firstClickRow;
+                                    doublebestfirstCol = firstClickCol;
+                                    doublebestsecondRow = secondClickRow;
+                                    doublebestsecondCol = secondClickCol;
+                                    doublebestmiddleRow = null;
+                                    doublebestmiddleCol = null;
                                 }
                             }
                             doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 1, secondClickCol = y - 1;
@@ -1094,6 +1113,12 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                 doubleTempArray[firstClickRow][firstClickCol] = 0;
                                 if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                     doubleComparePoints = CountPoints(tempArray);
+                                    doublebestfirstRow = firstClickRow;
+                                    doublebestfirstCol = firstClickCol;
+                                    doublebestsecondRow = secondClickRow;
+                                    doublebestsecondCol = secondClickCol;
+                                    doublebestmiddleRow = null;
+                                    doublebestmiddleCol = null;
                                 }
                             }
                             doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 2, secondClickCol = y + 2;
@@ -1122,6 +1147,12 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                     //
                                     if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                         doubleComparePoints = CountPoints(tempArray);
+                                        doublebestfirstRow = firstClickRow;
+                                        doublebestfirstCol = firstClickCol;
+                                        doublebestsecondRow = secondClickRow;
+                                        doublebestsecondCol = secondClickCol;
+                                        doublebestmiddleRow = tempEatenRow;
+                                        doublebestmiddleCol = tempEatenCol;
                                     }
                                 }
                                 doubleTempArray = JSON.parse(JSON.stringify(tempArray)), firstClickRow = x, firstClickCol = y, secondClickRow = x + 2, secondClickCol = y - 2;
@@ -1149,6 +1180,12 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                     //
                                     if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                         doubleComparePoints = CountPoints(tempArray);
+                                        doublebestfirstRow = firstClickRow;
+                                        doublebestfirstCol = firstClickCol;
+                                        doublebestsecondRow = secondClickRow;
+                                        doublebestsecondCol = secondClickCol;
+                                        doublebestmiddleRow = tempEatenRow;
+                                        doublebestmiddleCol = tempEatenCol;
                                     }
                                 }
                             } //
@@ -1166,12 +1203,24 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         //
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = tempEatenRow;
+                                            doublebestmiddleCol = tempEatenCol;
                                         }
                                     } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                         doubleTempArray[secondClickRow][secondClickCol] = 3;
                                         doubleTempArray[firstClickRow][firstClickCol] = 0;
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = null;
+                                            doublebestmiddleCol = null;
                                         }
                                     }
                                 }
@@ -1188,12 +1237,24 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         //
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = tempEatenRow;
+                                            doublebestmiddleCol = tempEatenCol;
                                         }
                                     } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                         doubleTempArray[secondClickRow][secondClickCol] = 3;
                                         doubleTempArray[firstClickRow][firstClickCol] = 0;
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = null;
+                                            doublebestmiddleCol = null;
                                         }
                                     }
                                 }
@@ -1210,12 +1271,24 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         //
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = tempEatenRow;
+                                            doublebestmiddleCol = tempEatenCol;
                                         }
                                     } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                         doubleTempArray[secondClickRow][secondClickCol] = 3;
                                         doubleTempArray[firstClickRow][firstClickCol] = 0;
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = null;
+                                            doublebestmiddleCol = null;
                                         }
                                     }
                                 }
@@ -1232,12 +1305,24 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
                                         //
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = tempEatenRow;
+                                            doublebestmiddleCol = tempEatenCol;
                                         }
                                     } else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                         doubleTempArray[secondClickRow][secondClickCol] = 4;
                                         doubleTempArray[firstClickRow][firstClickCol] = 0;
                                         if (CountPoints(doubleTempArray) > doubleComparePoints) {
                                             doubleComparePoints = CountPoints(tempArray);
+                                            doublebestfirstRow = firstClickRow;
+                                            doublebestfirstCol = firstClickCol;
+                                            doublebestsecondRow = secondClickRow;
+                                            doublebestsecondCol = secondClickCol;
+                                            doublebestmiddleRow = null;
+                                            doublebestmiddleCol = null;
                                         }
                                     }
                                 }
@@ -1248,6 +1333,25 @@ const pawnValue = 1, kingValue = 10, RecursionAmount = 2;
             }
             tempTurn--;
             RecursionCounter++;
+            if (doublebestfirstRow != null || doublebestfirstCol != null || doublebestsecondRow != null || doublebestsecondCol != null) {
+                if (tempArray[doublebestfirstRow][doublebestfirstCol] == 1) {
+                    if (doublebestsecondRow == 7) {
+                        tempArray[doublebestsecondRow][doublebestsecondCol] = 3;
+                    }
+                    else {
+                        tempArray[doublebestsecondRow][doublebestsecondCol] = 1;
+                    }
+                }
+                else {
+                    tempArray[doublebestfirstRow][doublebestfirstCol] = 3;
+                }
+                tempArray[doublebestfirstRow][doublebestfirstCol] = 0;
+                if (doublebestmiddleRow != null && doublebestmiddleCol != null) {
+                    tempArray[doublebestmiddleRow][doublebestmiddleCol] = 0;
+                }
+                doubleComparePoints = -100;
+            }
+
         }
     }
 
