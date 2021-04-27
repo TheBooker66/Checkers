@@ -885,9 +885,9 @@ const pawnValue = 1, kingValue = 10;
                     } //
                 }
             }
+            //console.log(AllNum);
+            ComputerMove();
         }
-        //console.log(AllNum);
-        ComputerMove();
     }
 
     function ComputerMove() {
