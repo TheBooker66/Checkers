@@ -762,8 +762,8 @@ const pawnValue = 1, kingValue = 10;
         }
     }
 
-    function SwapBestVars(tempArray) {
-        comparePoints = CountPoints(tempArray);
+    function SwapBestVars(b) {
+        comparePoints = CountPoints(b);
         bestfirstRow = firstClickRow;
         bestfirstCol = firstClickCol;
         bestsecondRow = secondClickRow;
