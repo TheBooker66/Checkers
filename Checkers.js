@@ -76,7 +76,7 @@ const pawnValue = 1, kingValue = 10;
                 tdNum2 = parseInt(currentThis.id);
                 secondClickRow = Math.floor(tdNum2 / 8);
                 secondClickCol = tdNum2 % 8;
-                if (FirstCheckKingMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[secondClickRow][secondClickCol] = 3;
                     document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -92,14 +92,14 @@ const pawnValue = 1, kingValue = 10;
                     showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
                     document.getElementById("redplayeramount").innerHTML = showRedPlayerAmount;
                 }
-                else if (FirstCheckKingMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                else if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                     document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[secondClickRow][secondClickCol] = 3;
                     document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
-                else if (FirstCheckMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
                         document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -118,7 +118,7 @@ const pawnValue = 1, kingValue = 10;
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
-                else if (FirstCheckRightEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Right") == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
                         document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -154,7 +154,7 @@ const pawnValue = 1, kingValue = 10;
                     //
                     ChangeTurn();
                 }
-                else if (FirstCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Left") == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
                         document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -214,7 +214,7 @@ const pawnValue = 1, kingValue = 10;
                 tdNum2 = parseInt(currentThis.id);
                 secondClickRow = Math.floor(tdNum2 / 8);
                 secondClickCol = tdNum2 % 8;
-                if (SecondCheckKingMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[secondClickRow][secondClickCol] = 4;
                     document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -230,14 +230,14 @@ const pawnValue = 1, kingValue = 10;
                     showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pieces left (not counting kings).";
                     document.getElementById("blackplayeramount").innerHTML = showBlackPlayerAmount;
                 }
-                else if (SecondCheckKingMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                else if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                     document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[secondClickRow][secondClickCol] = 4;
                     document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
-                else if (SecondCheckMove(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
                         document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -256,7 +256,7 @@ const pawnValue = 1, kingValue = 10;
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
-                else if (SecondCheckRightEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Right") == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
                         document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -292,7 +292,7 @@ const pawnValue = 1, kingValue = 10;
                     //
                     ChangeTurn();
                 }
-                else if (SecondCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Left") == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
                         document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
@@ -338,158 +338,77 @@ const pawnValue = 1, kingValue = 10;
         }
     }
 
-    function FirstCheckMove(b, r1, c1, r2, c2) {
+    function CheckMove(t, b, r1, c1, r2, c2) {
         if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != 1)
             return 0;
         if (c1 - c2 != 1 && c1 - c2 != -1)
             return 0;
-        return 1;
-    }
-
-    function SecondCheckMove(b, r1, c1, r2, c2) {
-        if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != -1)
-            return 0;
-        if (c1 - c2 != 1 && c1 - c2 != -1)
-            return 0;
-        return 1;
-    }
-
-    function FirstCheckRightEat(b, r1, c1, r2, c2) {
-        if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != 2)
-            return 0;
-        if (c1 - c2 != -2)
-            return 0;
-        if (b[r1 + 1][c1 + 1] != 2 && b[r1 + 1][c1 + 1] != 4)
-            return 0;
-        return 1;
-    }
-
-    function FirstCheckLeftEat(b, r1, c1, r2, c2) {
-        if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != 2)
-            return 0;
-        if (c1 - c2 != 2)
-            return 0;
-        if (b[r1 + 1][c1 - 1] != 2 && b[r1 + 1][c1 - 1] != 4)
-            return 0;
-        return 1;
-    }
-
-    function SecondCheckRightEat(b, r1, c1, r2, c2) {
-        if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != -2)
-            return 0;
-        if (c1 - c2 != -2)
-            return 0;
-        if (b[r1 - 1][c1 + 1] != 1 && b[r1 - 1][c1 + 1] != 3)
-            return 0;
-        return 1;
-    }
-
-    function SecondCheckLeftEat(b, r1, c1, r2, c2) {
-        if (b[r2][c2] != 0)
-            return 0;
-        if (r2 - r1 != -2)
-            return 0;
-        if (c1 - c2 != 2)
-            return 0;
-        if (b[r1 - 1][c1 - 1] != 1 && b[r1 - 1][c1 - 1] != 3)
-            return 0;
-        return 1;
-    }
-
-    function FirstCheckKingMove(b, r1, c1, r2, c2) {
-        if (b[r1][c1] != 3)
-            return 0;
-        if (b[r2][c2] != 0)
-            return 0;
-        if (c1 - c2 != r1 - r2 && c1 - c2 != r2 - r1)
-            return 0;
-        var rc = Math.abs(r2 - r1); //equal to Math.abs(c2 - c1)
-        var counter2 = 0;  //how many pieces were eaten
-        if (r1 > r2) {
-            if (c1 > c2) {
-                for (var counter = 0; counter < rc; counter++) {
-                    r1--;
-                    c1--;
-                    if (b[r1][c1] != 0) {
-                        pieceEatenByKingID = r1 * 8 + c1;
-                        pieceEatenByKingRow = r1;
-                        pieceEatenByKingCol = c1;
-                        counter2++;
-                        if (b[r1][c1] == 1 || b[r1][c1] == 3)  //plus one more because a player can't eat his own pieces
-                            counter2++;
-                    }
-                }
-            }
-            else {
-                for (var counter = 0; counter < rc; counter++) {
-                    r1--;
-                    c1++;
-                    if (b[r1][c1] != 0) {
-                        pieceEatenByKingID = r1 * 8 + c1;
-                        pieceEatenByKingRow = r1;
-                        pieceEatenByKingCol = c1;
-                        counter2++;
-                        if (b[r1][c1] == 1 || b[r1][c1] == 3)  //plus one more because a player can't eat his own pieces
-                            counter2++;
-                    }
-                }
-            }
-        }
-        else {
-            if (c1 > c2) {
-                for (var counter = 0; counter < rc; counter++) {
-                    r1++;
-                    c1--;
-                    if (b[r1][c1] != 0) {
-                        pieceEatenByKingID = r1 * 8 + c1;
-                        pieceEatenByKingRow = r1;
-                        pieceEatenByKingCol = c1;
-                        counter2++;
-                        if (b[r1][c1] == 1 || b[r1][c1] == 3)  //plus one more because a player can't eat his own pieces
-                            counter2++;
-                    }
-                }
-            }
-            else {
-                for (var counter = 0; counter < rc; counter++) {
-                    r1++;
-                    c1++;
-                    if (b[r1][c1] != 0) {
-                        pieceEatenByKingID = r1 * 8 + c1;
-                        pieceEatenByKingRow = r1;
-                        pieceEatenByKingCol = c1;
-                        counter2++;
-                        if (b[r1][c1] == 1 || b[r1][c1] == 3)  //plus one more because a player can't eat his own pieces
-                            counter2++;
-                    }
-                }
-            }
-        }
-        if (counter2 > 0) {
-            if (counter2 > 1)
+        if (t % 2 == 0) {
+            if (r2 - r1 != 1)
                 return 0;
-            return 1;
         }
-        return 2;
+        else {
+            if (r2 - r1 != -1)
+                return 0;
+        }
+        return 1;
     }
 
-    function SecondCheckKingMove(b, r1, c1, r2, c2) {
-        if (b[r1][c1] != 4)
+    function CheckEat(t, b, r1, c1, r2, c2, RorL) {
+        if (b[r2][c2] != 0)
             return 0;
+        if (t % 2 == 0) {
+            if (r2 - r1 != 2)
+                return 0;
+            if (RorL == "Right") {
+                if (c1 - c2 != -2)
+                    return 0;
+                if (b[r1 + 1][c1 + 1] != 2 && b[r1 + 1][c1 + 1] != 4)
+                    return 0;
+            }
+            else if (RorL == "Left") {
+                if (c1 - c2 != 2)
+                    return 0;
+                if (b[r1 + 1][c1 - 1] != 2 && b[r1 + 1][c1 - 1] != 4)
+                    return 0;
+            }
+        }
+        else {
+            if (r2 - r1 != -2)
+                return 0;
+            if (RorL == "Right") {
+                if (c1 - c2 != -2)
+                    return 0;
+                if (b[r1 - 1][c1 + 1] != 1 && b[r1 - 1][c1 + 1] != 3)
+                    return 0;
+            }
+            else if (RorL == "Left") {
+                if (c1 - c2 != 2)
+                    return 0;
+                if (b[r1 - 1][c1 - 1] != 1 && b[r1 - 1][c1 - 1] != 3)
+                    return 0;
+            }
+        }
+        return 1;
+    }
+
+    function CheckKingMove(t, b, r1, c1, r2, c2) {
         if (b[r2][c2] != 0)
             return 0;
         if (c1 - c2 != r1 - r2 && c1 - c2 != r2 - r1)
             return 0;
+        var tempKing = b[r1][c1];
+        var tempPawn;
+        if (t % 2 == 0) {
+            if (tempKing != 3)
+                return 0;
+            tempPawn = 1;
+        }
+        else {
+            if (tempKing != 4)
+                return 0;
+            tempPawn = 2;
+        }
         var rc = Math.abs(r2 - r1); //equal to Math.abs(c2 - c1)
         var counter2 = 0;  //how many pieces were eaten
         if (r1 > r2) {
@@ -502,7 +421,7 @@ const pawnValue = 1, kingValue = 10;
                         pieceEatenByKingRow = r1;
                         pieceEatenByKingCol = c1;
                         counter2++;
-                        if (b[r1][c1] == 2 || b[r1][c1] == 4)  //plus one more because a player can't eat his own pieces
+                        if (b[r1][c1] == tempPawn || b[r1][c1] == tempKing)  //plus one more because a player can't eat his own pieces
                             counter2++;
                     }
                 }
@@ -516,7 +435,7 @@ const pawnValue = 1, kingValue = 10;
                         pieceEatenByKingRow = r1;
                         pieceEatenByKingCol = c1;
                         counter2++;
-                        if (b[r1][c1] == 2 || b[r1][c1] == 4)  //plus one more because a player can't eat his own pieces
+                        if (b[r1][c1] == tempPawn || b[r1][c1] == tempKing)  //plus one more because a player can't eat his own pieces
                             counter2++;
                     }
                 }
@@ -532,7 +451,7 @@ const pawnValue = 1, kingValue = 10;
                         pieceEatenByKingRow = r1;
                         pieceEatenByKingCol = c1;
                         counter2++;
-                        if (b[r1][c1] == 2 || b[r1][c1] == 4)  //plus one more because a player can't eat his own pieces
+                        if (b[r1][c1] == tempPawn || b[r1][c1] == tempKing)  //plus one more because a player can't eat his own pieces
                             counter2++;
                     }
                 }
@@ -546,7 +465,7 @@ const pawnValue = 1, kingValue = 10;
                         pieceEatenByKingRow = r1;
                         pieceEatenByKingCol = c1;
                         counter2++;
-                        if (b[r1][c1] == 2 || b[r1][c1] == 4)  //plus one more because a player can't eat his own pieces
+                        if (b[r1][c1] == tempPawn || b[r1][c1] == tempKing)  //plus one more because a player can't eat his own pieces
                             counter2++;
                     }
                 }
@@ -562,7 +481,7 @@ const pawnValue = 1, kingValue = 10;
 
     function ChangeTurn() {
         turns++;
-        tempTurn = turns
+        tempTurn = turns;
         if (turns % 2 == 0)
             showTurn = "It is currently " + name1 + "'s turn.";
         else
@@ -646,7 +565,7 @@ const pawnValue = 1, kingValue = 10;
                     if (tempArray[firstClickRow][firstClickCol] == 2) {
                         tempArray = JSON.parse(JSON.stringify(AllNum));
                         firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y + 1;
-                        if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                        if (CheckMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                             //checks if new king
                             if (secondClickRow == 0) {
                                 tempArray[secondClickRow][secondClickCol] = 4;
@@ -668,7 +587,7 @@ const pawnValue = 1, kingValue = 10;
                         }
                         tempArray = JSON.parse(JSON.stringify(AllNum));
                         firstClickRow = x, firstClickCol = y, secondClickRow = x - 1, secondClickCol = y - 1;
-                        if (SecondCheckMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                        if (CheckMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                             //checks if new king
                             if (secondClickRow == 0) {
                                 tempArray[secondClickRow][secondClickCol] = 4;
@@ -691,7 +610,7 @@ const pawnValue = 1, kingValue = 10;
                         tempArray = JSON.parse(JSON.stringify(AllNum));
                         firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y + 2;
                         if (secondClickRow >= 0) {
-                            if (SecondCheckRightEat(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                            if (CheckEat(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Right") == 1) {
                                 //checks if new king
                                 if (secondClickRow == 0) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
@@ -702,7 +621,7 @@ const pawnValue = 1, kingValue = 10;
                                 //
                                 tempArray[firstClickRow][firstClickCol] = 0;
                                 //removes eaten piece
-                                if (tempArray[firstClickRow - 1][firstClickCol + 1] == 1) {
+                                if (tempArray[firstClickRow - 1][firstClickCol + 1] == 1 || tempArray[firstClickRow - 1][firstClickCol + 1] == 3) {
                                     tempArray[firstClickRow - 1][firstClickCol + 1] = 0;
                                     tempEatenRow = firstClickRow - 1;
                                     tempEatenCol = firstClickCol + 1;
@@ -720,7 +639,7 @@ const pawnValue = 1, kingValue = 10;
                             }
                             tempArray = JSON.parse(JSON.stringify(AllNum));
                             firstClickRow = x, firstClickCol = y, secondClickRow = x - 2, secondClickCol = y - 2;
-                            if (SecondCheckLeftEat(AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                            if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Left") == 1) {
                                 //checks if new king
                                 if (secondClickRow == 0) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
@@ -731,7 +650,7 @@ const pawnValue = 1, kingValue = 10;
                                 //
                                 tempArray[firstClickRow][firstClickCol] = 0;
                                 //removes eaten piece
-                                if (tempArray[firstClickRow - 1][firstClickCol - 1] == 1) {
+                                if (tempArray[firstClickRow - 1][firstClickCol - 1] == 1 || tempArray[firstClickRow - 1][firstClickCol - 1] == 3) {
                                     tempArray[firstClickRow - 1][firstClickCol - 1] = 0;
                                     tempEatenRow = firstClickRow - 1;
                                     tempEatenCol = firstClickCol - 1;
@@ -754,7 +673,7 @@ const pawnValue = 1, kingValue = 10;
                         for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
                             for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
                                 tempArray = JSON.parse(JSON.stringify(AllNum));
-                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
@@ -770,7 +689,7 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
                                 }
-                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -787,7 +706,7 @@ const pawnValue = 1, kingValue = 10;
                         for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
                             for (secondClickCol = firstClickCol; secondClickCol < 8; secondClickCol++) {
                                 tempArray = JSON.parse(JSON.stringify(AllNum))
-                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
@@ -803,7 +722,7 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
                                 }
-                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -820,7 +739,7 @@ const pawnValue = 1, kingValue = 10;
                         for (secondClickRow = firstClickRow; secondClickRow < 8; secondClickRow++) {
                             for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
                                 tempArray = JSON.parse(JSON.stringify(AllNum));
-                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
@@ -836,7 +755,7 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
                                 }
-                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
@@ -853,7 +772,7 @@ const pawnValue = 1, kingValue = 10;
                         for (secondClickRow = firstClickRow; secondClickRow >= 0; secondClickRow--) {
                             for (secondClickCol = firstClickCol; secondClickCol >= 0; secondClickCol--) {
                                 tempArray = JSON.parse(JSON.stringify(AllNum));
-                                if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
+                                if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     //removes eaten piece
@@ -869,7 +788,7 @@ const pawnValue = 1, kingValue = 10;
                                         bestmiddleCol = pieceEatenByKingCol;
                                     }
                                 }
-                                else if (SecondCheckKingMove(tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
+                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (CountPoints(tempArray) < comparePoints) {
