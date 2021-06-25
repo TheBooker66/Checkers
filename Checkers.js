@@ -77,27 +77,29 @@ const pawnValue = 1, kingValue = 10;
                 secondClickRow = Math.floor(tdNum2 / 8);
                 secondClickCol = tdNum2 % 8;
                 if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                    document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[secondClickRow][secondClickCol] = 3;
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[firstClickRow][firstClickCol] = 0;
-                    //remove eaten piece
-                    if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 2)
-                        redPawnCount--;
-                    document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                    CheckWin();
-                    //
-                    ChangeTurn();
-                    showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
-                    document.getElementById("redplayeramount").innerHTML = showRedPlayerAmount;
-                }
-                else if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                    document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[secondClickRow][secondClickCol] = 3;
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[firstClickRow][firstClickCol] = 0;
-                    ChangeTurn();
+                    if (pieceEatenByKingID == null) {
+                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[secondClickRow][secondClickCol] = 3;
+                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[firstClickRow][firstClickCol] = 0;
+                        ChangeTurn();
+                    }
+                    else {
+                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[secondClickRow][secondClickCol] = 3;
+                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[firstClickRow][firstClickCol] = 0;
+                        //remove eaten piece
+                        if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 2)
+                            redPawnCount--;
+                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                        CheckWin();
+                        //
+                        ChangeTurn();
+                        showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
+                        document.getElementById("redplayeramount").innerHTML = showRedPlayerAmount;
+                    }
                 }
                 else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //check if new king
@@ -215,27 +217,29 @@ const pawnValue = 1, kingValue = 10;
                 secondClickRow = Math.floor(tdNum2 / 8);
                 secondClickCol = tdNum2 % 8;
                 if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
-                    document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[secondClickRow][secondClickCol] = 4;
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[firstClickRow][firstClickCol] = 0;
-                    //removes eaten piece
-                    if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 1)
-                        blackPawnCount--;
-                    document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                    CheckWin();
-                    //
-                    ChangeTurn();
-                    showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pieces left (not counting kings).";
-                    document.getElementById("blackplayeramount").innerHTML = showBlackPlayerAmount;
-                }
-                else if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                    document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[secondClickRow][secondClickCol] = 4;
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
-                    AllNum[firstClickRow][firstClickCol] = 0;
-                    ChangeTurn();
+                    if (pieceEatenByKingID == null) {
+                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[secondClickRow][secondClickCol] = 4;
+                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[firstClickRow][firstClickCol] = 0;
+                        ChangeTurn();
+                    }
+                    else {
+                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[secondClickRow][secondClickCol] = 4;
+                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[firstClickRow][firstClickCol] = 0;
+                        //removes eaten piece
+                        if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 1)
+                            blackPawnCount--;
+                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                        CheckWin();
+                        //
+                        ChangeTurn();
+                        showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pieces left (not counting kings).";
+                        document.getElementById("blackplayeramount").innerHTML = showBlackPlayerAmount;
+                    }
                 }
                 else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //checks if new king and removes 1 from the count
@@ -476,7 +480,8 @@ const pawnValue = 1, kingValue = 10;
                 return 0;
             return 1;
         }
-        return 2;
+        pieceEatenByKingID = null;
+        return 1;
     }
 
     function ChangeTurn() {
@@ -576,11 +581,7 @@ const pawnValue = 1, kingValue = 10;
                             //
                             tempArray[firstClickRow][firstClickCol] = 0;
                             if (CountPoints(tempArray) < comparePoints) {
-                                comparePoints = CountPoints(tempArray);
-                                bestfirstRow = firstClickRow;
-                                bestfirstCol = firstClickCol;
-                                bestsecondRow = secondClickRow;
-                                bestsecondCol = secondClickCol;
+                                SwapBestVars(tempArray);
                                 bestmiddleRow = null;
                                 bestmiddleCol = null;
                             }
@@ -598,11 +599,7 @@ const pawnValue = 1, kingValue = 10;
                             //
                             tempArray[firstClickRow][firstClickCol] = 0;
                             if (CountPoints(tempArray) < comparePoints) {
-                                comparePoints = CountPoints(tempArray);
-                                bestfirstRow = firstClickRow;
-                                bestfirstCol = firstClickCol;
-                                bestsecondRow = secondClickRow;
-                                bestsecondCol = secondClickCol;
+                                SwapBestVars(tempArray);
                                 bestmiddleRow = null;
                                 bestmiddleCol = null;
                             }
@@ -628,11 +625,7 @@ const pawnValue = 1, kingValue = 10;
                                 }
                                 //
                                 if (CountPoints(tempArray) < comparePoints) {
-                                    comparePoints = CountPoints(tempArray);
-                                    bestfirstRow = firstClickRow;
-                                    bestfirstCol = firstClickCol;
-                                    bestsecondRow = secondClickRow;
-                                    bestsecondCol = secondClickCol;
+                                    SwapBestVars(tempArray);
                                     bestmiddleRow = tempEatenRow;
                                     bestmiddleCol = tempEatenCol;
                                 }
@@ -657,11 +650,7 @@ const pawnValue = 1, kingValue = 10;
                                 }
                                 //
                                 if (CountPoints(tempArray) < comparePoints) {
-                                    comparePoints = CountPoints(tempArray);
-                                    bestfirstRow = firstClickRow;
-                                    bestfirstCol = firstClickCol;
-                                    bestsecondRow = secondClickRow;
-                                    bestsecondCol = secondClickCol;
+                                    SwapBestVars(tempArray);
                                     bestmiddleRow = tempEatenRow;
                                     bestmiddleCol = tempEatenCol;
                                 }
@@ -676,28 +665,19 @@ const pawnValue = 1, kingValue = 10;
                                 if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
-                                    //removes eaten piece
-                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                    //
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
-                                        bestmiddleRow = pieceEatenByKingRow;
-                                        bestmiddleCol = pieceEatenByKingCol;
+                                    if (pieceEatenByKingID != null) {
+                                        //removes eaten piece
+                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                                        //
+                                        if (CountPoints(tempArray) < comparePoints) {
+                                            SwapBestVars(tempArray);
+                                            bestmiddleRow = pieceEatenByKingRow;
+                                            bestmiddleCol = pieceEatenByKingCol;
+                                        }
                                     }
-                                }
-                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                    tempArray[secondClickRow][secondClickCol] = 4;
-                                    tempArray[firstClickRow][firstClickCol] = 0;
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
+                                    else {
+                                        if (CountPoints(tempArray) < comparePoints)
+                                            SwapBestVars(tempArray);
                                     }
                                 }
                             }
@@ -709,28 +689,19 @@ const pawnValue = 1, kingValue = 10;
                                 if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
-                                    //removes eaten piece
-                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                    //
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
-                                        bestmiddleRow = pieceEatenByKingRow;
-                                        bestmiddleCol = pieceEatenByKingCol;
+                                    if (pieceEatenByKingID != null) {
+                                        //removes eaten piece
+                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                                        //
+                                        if (CountPoints(tempArray) < comparePoints) {
+                                            SwapBestVars(tempArray);
+                                            bestmiddleRow = pieceEatenByKingRow;
+                                            bestmiddleCol = pieceEatenByKingCol;
+                                        }
                                     }
-                                }
-                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                    tempArray[secondClickRow][secondClickCol] = 4;
-                                    tempArray[firstClickRow][firstClickCol] = 0;
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
+                                    else {
+                                        if (CountPoints(tempArray) < comparePoints)
+                                            SwapBestVars(tempArray);
                                     }
                                 }
                             }
@@ -742,28 +713,19 @@ const pawnValue = 1, kingValue = 10;
                                 if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
-                                    //removes eaten piece
-                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                    //
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
-                                        bestmiddleRow = pieceEatenByKingRow;
-                                        bestmiddleCol = pieceEatenByKingCol;
+                                    if (pieceEatenByKingID != null) {
+                                        //removes eaten piece
+                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                                        //
+                                        if (CountPoints(tempArray) < comparePoints) {
+                                            SwapBestVars(tempArray);
+                                            bestmiddleRow = pieceEatenByKingRow;
+                                            bestmiddleCol = pieceEatenByKingCol;
+                                        }
                                     }
-                                }
-                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                    tempArray[secondClickRow][secondClickCol] = 4;
-                                    tempArray[firstClickRow][firstClickCol] = 0;
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
+                                    else {
+                                        if (CountPoints(tempArray) < comparePoints)
+                                            SwapBestVars(tempArray);
                                     }
                                 }
                             }
@@ -775,38 +737,37 @@ const pawnValue = 1, kingValue = 10;
                                 if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
-                                    //removes eaten piece
-                                    tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                    //
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
-                                        bestmiddleRow = pieceEatenByKingRow;
-                                        bestmiddleCol = pieceEatenByKingCol;
+                                    if (pieceEatenByKingID != null) {
+                                        //removes eaten piece
+                                        tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
+                                        //
+                                        if (CountPoints(tempArray) < comparePoints) {
+                                            SwapBestVars(tempArray);
+                                            bestmiddleRow = pieceEatenByKingRow;
+                                            bestmiddleCol = pieceEatenByKingCol;
+                                        }
                                     }
-                                }
-                                else if (CheckKingMove(turns, tempArray, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 2) {
-                                    tempArray[secondClickRow][secondClickCol] = 4;
-                                    tempArray[firstClickRow][firstClickCol] = 0;
-                                    if (CountPoints(tempArray) < comparePoints) {
-                                        comparePoints = CountPoints(tempArray);
-                                        bestfirstRow = firstClickRow;
-                                        bestfirstCol = firstClickCol;
-                                        bestsecondRow = secondClickRow;
-                                        bestsecondCol = secondClickCol;
+                                    else {
+                                        if (CountPoints(tempArray) < comparePoints)
+                                            SwapBestVars(tempArray);
                                     }
                                 }
                             }
                         }
-                    } //
+                    }
                 }
             }
             //console.log(AllNum);
             ComputerMove();
         }
+    }
+
+    function SwapBestVars(tempArray) {
+        comparePoints = CountPoints(tempArray);
+        bestfirstRow = firstClickRow;
+        bestfirstCol = firstClickCol;
+        bestsecondRow = secondClickRow;
+        bestsecondCol = secondClickCol;
     }
 
     function ComputerMove() {
