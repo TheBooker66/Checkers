@@ -666,9 +666,7 @@ const pawnValue = 1, kingValue = 10;
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (pieceEatenByKingID != null) {
-                                        //removes eaten piece
                                         tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
                                         if (CountPoints(tempArray) < comparePoints) {
                                             SwapBestVars(tempArray);
                                             bestmiddleRow = pieceEatenByKingRow;
@@ -690,9 +688,7 @@ const pawnValue = 1, kingValue = 10;
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (pieceEatenByKingID != null) {
-                                        //removes eaten piece
                                         tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
                                         if (CountPoints(tempArray) < comparePoints) {
                                             SwapBestVars(tempArray);
                                             bestmiddleRow = pieceEatenByKingRow;
@@ -714,9 +710,7 @@ const pawnValue = 1, kingValue = 10;
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (pieceEatenByKingID != null) {
-                                        //removes eaten piece
                                         tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
                                         if (CountPoints(tempArray) < comparePoints) {
                                             SwapBestVars(tempArray);
                                             bestmiddleRow = pieceEatenByKingRow;
@@ -738,9 +732,7 @@ const pawnValue = 1, kingValue = 10;
                                     tempArray[secondClickRow][secondClickCol] = 4;
                                     tempArray[firstClickRow][firstClickCol] = 0;
                                     if (pieceEatenByKingID != null) {
-                                        //removes eaten piece
                                         tempArray[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
-                                        //
                                         if (CountPoints(tempArray) < comparePoints) {
                                             SwapBestVars(tempArray);
                                             bestmiddleRow = pieceEatenByKingRow;
