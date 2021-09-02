@@ -486,7 +486,6 @@ const pawnValue = 1, kingValue = 10;
 
     function ChangeTurn() {
         turns++;
-        tempTurn = turns;
         if (turns % 2 == 0)
             showTurn = "It is currently " + name1 + "'s turn.";
         else
@@ -526,7 +525,6 @@ const pawnValue = 1, kingValue = 10;
         redPawnCount = 12;
         comparePoints = 100;
         RecursionCounter = 1;
-        tempTurn = turns;
         BuildingTheBoard();
     }
 }
@@ -538,12 +536,10 @@ const pawnValue = 1, kingValue = 10;
             for (var y = 0; y < 8; y++) {
                 switch (b[x][y]) {
                     case 1:
-                        boardPoints += x;
-                        boardPoints++;
+                        boardPoints += x + 1;
                         break;
                     case 2:
-                        boardPoints -= (7 - x);
-                        boardPoints--;
+                        boardPoints -= (7 - x) - 1;
                         break;
                     case 3:
                         boardPoints += kingValue;
