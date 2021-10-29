@@ -26,13 +26,13 @@ const pawnValue = 1, kingValue = 10;
             boardText = boardText + " <tr>";
             for (y = 0; y < 8; y++) {
                 if ((x + y) % 2 == 0)
-                    boardText = boardText + "<td id='" + nameInTable + "'> <img src='BeigeTile.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
+                    boardText = boardText + "<td id='" + nameInTable + "'> <img src='Images/BeigeTile.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
                 else if (x <= 2) //x == 0 || x == 1 || x == 2
-                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
+                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='Images/BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
                 else if (x >= 5) //x == 5 || x == 6 || x == 7
-                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
+                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
                 else if (x == 3 || x == 4)
-                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
+                    boardText = boardText + "<td id='" + nameInTable + "' onclick='PressOnTile(this);' class='canBeClickedOn'> <img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/> </td>";
                 nameInTable++;
             }
             boardText = boardText + " </tr>";
@@ -67,9 +67,9 @@ const pawnValue = 1, kingValue = 10;
                 firstClickRow = Math.floor(tdNum1 / 8);
                 firstClickCol = tdNum1 % 8;
                 if (AllNum[firstClickRow][firstClickCol] == 1)
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackCheckersPawnBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackCheckersPawnBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 if (AllNum[firstClickRow][firstClickCol] == 3)
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackCheckersKingBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackCheckersKingBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 clickCounter++;
             }
             else {
@@ -78,21 +78,21 @@ const pawnValue = 1, kingValue = 10;
                 secondClickCol = tdNum2 % 8;
                 if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     if (pieceEatenByKingID == null) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 3;
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow][firstClickCol] = 0;
                         ChangeTurn();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 3;
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow][firstClickCol] = 0;
                         //remove eaten piece
                         if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 2)
                             redPawnCount--;
-                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
                         CheckWin();
                         //
@@ -104,7 +104,7 @@ const pawnValue = 1, kingValue = 10;
                 else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 3;
                         blackPawnCount--;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
@@ -112,18 +112,18 @@ const pawnValue = 1, kingValue = 10;
                         CheckWin();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 1;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
                 else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Right") == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 3;
                         blackPawnCount--;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
@@ -131,16 +131,16 @@ const pawnValue = 1, kingValue = 10;
                         CheckWin();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 1;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     //removes eaten piece
                     if (AllNum[firstClickRow + 1][firstClickCol + 1] == 2 && firstClickCol - secondClickCol == -2) {
                         tdNum3 = (firstClickRow + 1) * 8 + (firstClickCol + 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow + 1][firstClickCol + 1] = 0;
                         redPawnCount--;
                         showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
@@ -149,7 +149,7 @@ const pawnValue = 1, kingValue = 10;
                     }
                     else if (AllNum[firstClickRow + 1][firstClickCol + 1] == 4 && firstClickCol - secondClickCol == -2) {
                         tdNum3 = (firstClickRow + 1) * 8 + (firstClickCol + 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow + 1][firstClickCol + 1] = 0;
                         CheckWin();
                     }
@@ -159,7 +159,7 @@ const pawnValue = 1, kingValue = 10;
                 else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Left") == 1) {
                     //check if new king
                     if (secondClickRow == 7 && AllNum[firstClickRow][firstClickCol] == 1) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 3;
                         blackPawnCount--;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
@@ -167,16 +167,16 @@ const pawnValue = 1, kingValue = 10;
                         CheckWin();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 1;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     //removes eaten piece
                     if (AllNum[firstClickRow + 1][firstClickCol - 1] == 2 && firstClickCol - secondClickCol == 2) {
                         tdNum3 = (firstClickRow + 1) * 8 + (firstClickCol - 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow + 1][firstClickCol - 1] = 0;
                         redPawnCount--;
                         showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
@@ -185,7 +185,7 @@ const pawnValue = 1, kingValue = 10;
                     }
                     else if (AllNum[firstClickRow + 1][firstClickCol - 1] == 4 && firstClickCol - secondClickCol == 2) {
                         tdNum3 = (firstClickRow + 1) * 8 + (firstClickCol - 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow + 1][firstClickCol - 1] = 0;
                         CheckWin();
                     }
@@ -194,9 +194,9 @@ const pawnValue = 1, kingValue = 10;
                 }
                 else {
                     if (AllNum[firstClickRow][firstClickCol] == 1)
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     if (AllNum[firstClickRow][firstClickCol] == 3)
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 }
                 clickCounter++;
             }
@@ -207,9 +207,9 @@ const pawnValue = 1, kingValue = 10;
                 firstClickRow = Math.floor(tdNum1 / 8);
                 firstClickCol = tdNum1 % 8;
                 if (AllNum[firstClickRow][firstClickCol] == 2)
-                    document.getElementById(tdNum1).innerHTML = "<img src='RedCheckersPawnBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/RedCheckersPawnBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 if (AllNum[firstClickRow][firstClickCol] == 4)
-                    document.getElementById(tdNum1).innerHTML = "<img src='RedCheckersKingBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/RedCheckersKingBorder.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 clickCounter++;
             }
             else {
@@ -218,21 +218,21 @@ const pawnValue = 1, kingValue = 10;
                 secondClickCol = tdNum2 % 8;
                 if (CheckKingMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     if (pieceEatenByKingID == null) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 4;
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow][firstClickCol] = 0;
                         ChangeTurn();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 4;
-                        document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow][firstClickCol] = 0;
                         //removes eaten piece
                         if (AllNum[pieceEatenByKingRow][pieceEatenByKingCol] == 1)
                             blackPawnCount--;
-                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(pieceEatenByKingID).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[pieceEatenByKingRow][pieceEatenByKingCol] = 0;
                         CheckWin();
                         //
@@ -244,7 +244,7 @@ const pawnValue = 1, kingValue = 10;
                 else if (CheckMove(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol) == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 4;
                         redPawnCount--;
                         showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
@@ -252,18 +252,18 @@ const pawnValue = 1, kingValue = 10;
                         CheckWin();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 2;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     ChangeTurn();
                 }
                 else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Right") == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 4;
                         redPawnCount--;
                         showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
@@ -271,16 +271,16 @@ const pawnValue = 1, kingValue = 10;
                         CheckWin();
                     }
                     else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 2;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     //removes eaten piece and removes 1 from the count
                     if (AllNum[firstClickRow - 1][firstClickCol + 1] == 1 && firstClickCol - secondClickCol == -2) {
                         tdNum3 = (firstClickRow - 1) * 8 + (firstClickCol + 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow - 1][firstClickCol + 1] = 0;
                         blackPawnCount--;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
@@ -289,7 +289,7 @@ const pawnValue = 1, kingValue = 10;
                     }
                     else if (AllNum[firstClickRow - 1][firstClickCol + 1] == 3 && firstClickCol - secondClickCol == -2) {
                         tdNum3 = (firstClickRow - 1) * 8 + (firstClickCol + 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow - 1][firstClickCol + 1] = 0;
                         CheckWin();
                     }
@@ -299,23 +299,23 @@ const pawnValue = 1, kingValue = 10;
                 else if (CheckEat(turns, AllNum, firstClickRow, firstClickCol, secondClickRow, secondClickCol, "Left") == 1) {
                     //checks if new king and removes 1 from the count
                     if (secondClickRow == 0 && AllNum[firstClickRow][firstClickCol] == 2) {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 4;
                         redPawnCount--;
                         showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
                         document.getElementById("redplayeramount").innerHTML = showRedPlayerAmount;
                         CheckWin();
                     } else {
-                        document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[secondClickRow][secondClickCol] = 2;
                     }
                     //
-                    document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[firstClickRow][firstClickCol] = 0;
                     //removes eaten piece and removes 1 from the count
                     if (AllNum[firstClickRow - 1][firstClickCol - 1] == 1 && firstClickCol - secondClickCol == 2) {
                         tdNum3 = (firstClickRow - 1) * 8 + (firstClickCol - 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow - 1][firstClickCol - 1] = 0;
                         blackPawnCount--;
                         showBlackPlayerAmount = "There are currently " + blackPawnCount + " black pawns left (not counting kings).";
@@ -324,7 +324,7 @@ const pawnValue = 1, kingValue = 10;
                     }
                     else if (AllNum[firstClickRow - 1][firstClickCol - 1] == 3 && firstClickCol - secondClickCol == 2) {
                         tdNum3 = (firstClickRow - 1) * 8 + (firstClickCol - 1);
-                        document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                         AllNum[firstClickRow - 1][firstClickCol - 1] = 0;
                         CheckWin();
                     }
@@ -333,9 +333,9 @@ const pawnValue = 1, kingValue = 10;
                 }
                 else {
                     if (AllNum[firstClickRow][firstClickCol] == 2)
-                        document.getElementById(tdNum1).innerHTML = "<img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     if (AllNum[firstClickRow][firstClickCol] == 4)
-                        document.getElementById(tdNum1).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                        document.getElementById(tdNum1).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 }
                 clickCounter++;
             }
@@ -768,7 +768,7 @@ const pawnValue = 1, kingValue = 10;
             tdNum2 = bestsecondRow * 8 + bestsecondCol;
             if (AllNum[bestfirstRow][bestfirstCol] == 2) {
                 if (bestsecondRow == 0) {
-                    document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[bestsecondRow][bestsecondCol] = 4;
                     redPawnCount--;
                     showRedPlayerAmount = "There are currently " + redPawnCount + " red pawns left (not counting kings).";
@@ -776,15 +776,15 @@ const pawnValue = 1, kingValue = 10;
                     CheckWin();
                 }
                 else {
-                    document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                    document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersPawn.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                     AllNum[bestsecondRow][bestsecondCol] = 2;
                 }
             }
             else {
-                document.getElementById(tdNum2).innerHTML = "<img src='RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                document.getElementById(tdNum2).innerHTML = "<img src='Images/RedCheckersKing.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 AllNum[bestsecondRow][bestsecondCol] = 4;
             }
-            document.getElementById(tdNum1).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+            document.getElementById(tdNum1).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
             AllNum[bestfirstRow][bestfirstCol] = 0;
             if (bestmiddleRow != null && bestmiddleCol != null) {
                 tdNum3 = bestmiddleRow * 8 + bestmiddleCol;
