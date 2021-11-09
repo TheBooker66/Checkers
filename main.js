@@ -794,7 +794,7 @@ const pawnValue = 1, kingValue = 10;
                     document.getElementById("blackplayeramount").innerHTML = showBlackPlayerAmount;
                     CheckWin();
                 }
-                document.getElementById(tdNum3).innerHTML = "<img src='BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
+                document.getElementById(tdNum3).innerHTML = "<img src='Images/BlackTile.png' width='" + boardSize + "' height=' " + boardSize + "'/>";
                 AllNum[bestmiddleRow][bestmiddleCol] = 0;
             }
             comparePoints = 100;
