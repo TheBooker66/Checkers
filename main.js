@@ -403,8 +403,7 @@ const pawnValue = 1, kingValue = 10;
             return 0;
         if (c1 - c2 !== r1 - r2 && c1 - c2 !== r2 - r1)
             return 0;
-        var tempKing = b[r1][c1];
-        var tempPawn;
+        var tempKing = b[r1][c1], tempPawn;
         if (t % 2 === 0) {
             if (tempKing !== 3)
                 return 0;
@@ -419,7 +418,7 @@ const pawnValue = 1, kingValue = 10;
         var counter2 = 0;  //how many pieces were eaten
         if (r1 > r2) {
             if (c1 > c2) {
-                for (var counter = 0; counter < rc; counter++) {
+                for (let counter = 0; counter < rc; counter++) {
                     r1--;
                     c1--;
                     if (b[r1][c1] !== 0) {
@@ -433,7 +432,7 @@ const pawnValue = 1, kingValue = 10;
                 }
             }
             else {
-                for (var counter = 0; counter < rc; counter++) {
+                for (let counter = 0; counter < rc; counter++) {
                     r1--;
                     c1++;
                     if (b[r1][c1] !== 0) {
@@ -449,7 +448,7 @@ const pawnValue = 1, kingValue = 10;
         }
         else {
             if (c1 > c2) {
-                for (var counter = 0; counter < rc; counter++) {
+                for (let counter = 0; counter < rc; counter++) {
                     r1++;
                     c1--;
                     if (b[r1][c1] !== 0) {
@@ -463,7 +462,7 @@ const pawnValue = 1, kingValue = 10;
                 }
             }
             else {
-                for (var counter = 0; counter < rc; counter++) {
+                for (let counter = 0; counter < rc; counter++) {
                     r1++;
                     c1++;
                     if (b[r1][c1] !== 0) {
@@ -558,8 +557,10 @@ const pawnValue = 1, kingValue = 10;
     function ComputerThink() {
         if (turns % 2 !== 0) {
             var tempEatenRow, tempEatenCol;
-            var tempArray = JSON.parse(JSON.stringify(AllNum));  /* creates a deep copy: I use this because a js array is an object 
-            - the copy references that object - if I don't use these commands, the og gets modified when I modify the copy */
+            var tempArray = JSON.parse(JSON.stringify(AllNum));
+            /* creates a deep copy: I use this because a js array is an object
+            - the copy references that object - if I don't use these commands,
+            the og gets modified when I modify the copy */
             for (var x = 0; x < 8; x++) {
                 for (var y = 0; y < 8; y++) {
                     tempArray = JSON.parse(JSON.stringify(AllNum));
