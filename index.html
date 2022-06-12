@@ -41,7 +41,7 @@
 <body onload='BuildingTheBoard();'>
     <table id="board" style="display:inline-block"></table>
     <div style="display:inline-block; vertical-align:top">
-        <font size="+2">
+        <span style="font-size: 144%; ">
             <div id="playerName1"></div>
             <div id="playerName2"></div>
             <div id="playerTurn"></div>
@@ -51,8 +51,8 @@
             <div>
                 Rules:
             </div>
-        </font>
-        <font size="+1">
+        </span>
+        <span style="font-size: larger; ">
             <div id="rules">
                 Moves are allowed only on the dark squares, so pieces always move diagonally.
                 <br />
@@ -82,7 +82,7 @@
                 <br />
                 To play instead of the computer, just play normally.
             </div>
-        </font>
+        </span>
         <br />
         <button onclick="ComputerThink();">
             Computer Move!
